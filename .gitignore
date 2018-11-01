@@ -1,0 +1,4 @@
+*.pdb
+obj/
+Madika.dll
+*.deps.json

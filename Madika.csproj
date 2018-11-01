@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <OutputPath>.</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <DebugSymbols>false</DebugSymbols>
+    <Configuration>Release</Configuration>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="On.Celeste">
+      <HintPath>./MMHOOK_Celeste.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Celeste">
+      <HintPath>../../Celeste.exe</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+</Project>
