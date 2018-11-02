@@ -5,7 +5,7 @@
     <OutputPath>.</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-    <DebugSymbols>false</DebugSymbols>
+    <DebugType>None</DebugType>
     <Configuration>Release</Configuration>
   </PropertyGroup>
 
