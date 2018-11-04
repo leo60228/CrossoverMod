@@ -9,10 +9,12 @@ namespace Madika {
         [YamlIgnore]
         public MadikaCharacter Character {
             get {
-                if (Mode == MadikaModuleChar.Kris) {
+                if (Mode == MadikaModuleChar.Kris || Mode == MadikaModuleChar.Invisible) {
                     return MadikaModule.Kris;
                 } else if (Mode == MadikaModuleChar.Ralsei) {
                     return MadikaModule.Ralsei;
+                } else if (Mode == MadikaModuleChar.Monika) {
+                    return MadikaModule.Monika;
                 }
 
                 return null;
@@ -23,6 +25,8 @@ namespace Madika {
     public enum MadikaModuleChar {
         Off,
         Kris,
-        Ralsei
+        Ralsei,
+        Monika,
+        Invisible
     }
 }

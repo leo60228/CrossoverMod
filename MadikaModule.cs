@@ -16,9 +16,12 @@ namespace Madika {
 
         public static MadikaCharacter Kris { get; private set; }
         public static MadikaCharacter Ralsei { get; private set; }
+        public static MadikaCharacter Monika { get; private set; }
 
         public static bool OffsetFeet = false;
         public static float OffsetCounter = 0f;
+
+        public static bool AirDuck = false;
 
         public MadikaModule() {
             Instance = this;
@@ -30,8 +33,9 @@ namespace Madika {
         }
 
         public override void LoadContent(bool firstLoad) {
-            Kris = new MadikaCharacter(GFX.Game["characters/player/kris"], 3);
-            Ralsei = new MadikaCharacter(GFX.Game["characters/player/ralsei"]);
+            Kris = new MadikaCharacter(GFX.Game["characters/player/kris"], 3, 0);
+            Ralsei = new MadikaCharacter(GFX.Game["characters/player/ralsei"], 2, 0);
+            Monika = new MadikaCharacter(GFX.Game["characters/player/monika"], 3, 6);
         }
 
         public override void Unload() {
@@ -42,7 +46,7 @@ namespace Madika {
         public static void RenderHair(On.Celeste.PlayerHair.orig_Render orig, PlayerHair self) {
             Player player = self.Entity as Player;
 
-            if (player == null || self.GetSprite().Mode == PlayerSpriteMode.Badeline || Settings.Mode == MadikaModuleChar.Off) {
+            if (player == null || self.GetSprite().Mode == PlayerSpriteMode.Badeline || Character == null) {
                 orig(self);
                 return;
             }
@@ -51,46 +55,58 @@ namespace Madika {
         public static void RenderPlayerSprite(On.Celeste.PlayerSprite.orig_Render orig, PlayerSprite self) {
             Player player = self.Entity as Player;
 
-            if (player == null || self.Mode == PlayerSpriteMode.Badeline || Settings.Mode == MadikaModuleChar.Off) {
+            if (player == null || self.Mode == PlayerSpriteMode.Badeline || Character == null) {
                 orig(self);
                 return;
             }
 
+            if (Settings.Mode == MadikaModuleChar.Invisible) return;
+
+            if (player.Ducking && !player.OnSafeGround) {
+                AirDuck = true;
+            }
+
+            if (player.OnSafeGround || Input.MoveY != 1) AirDuck = false;
+
+            bool ducking = player.Ducking || AirDuck;
+
+            int widthFix = (Character.Sprite.Width / 2 + 2) * (player.Facing == Facings.Left ? 1 : -1);
+
             if (player.Speed.X != 0 && player.OnSafeGround) {
                 Character.Body.Draw(
-                  self.RenderPosition.Floor() + new Vector2(player.Facing == Facings.Left ? 6 : -6, -Character.Sprite.Height),
+                  self.RenderPosition.Floor() + new Vector2(widthFix, -Character.Sprite.Height),
                   Vector2.Zero, Color.White,
                   self.Scale
                 );
 
                 if (player.Facing == Facings.Left) {
                     Character.LeftFoot.Draw(
-                      self.RenderPosition.Floor() + new Vector2(OffsetFeet ? 6 : 7, -Character.FootHeight),
+                      self.RenderPosition.Floor() + new Vector2(widthFix + (OffsetFeet ? 0 : 1), -Character.FootHeight),
                       Vector2.Zero, Color.White,
                       self.Scale
                     );
                     Character.RightFoot.Draw(
-                      self.RenderPosition.Floor() + new Vector2((OffsetFeet ? 7 : 6) - Character.Sprite.Width / Character.FootHeight, -Character.FootHeight),
+                      self.RenderPosition.Floor() + new Vector2(widthFix + (OffsetFeet ? 1 : 0) - Character.RightFootX, -Character.FootHeight),
                       Vector2.Zero, Color.White,
                       self.Scale
                     );
                 } else {
                     Character.LeftFoot.Draw(
-                      self.RenderPosition.Floor() + new Vector2(OffsetFeet ? -7 : -6, -Character.FootHeight),
+                      self.RenderPosition.Floor() + new Vector2(widthFix - (OffsetFeet ? 1 : 0), -Character.FootHeight),
                       Vector2.Zero, Color.White,
                       self.Scale
                     );
                     Character.RightFoot.Draw(
-                      self.RenderPosition.Floor() + new Vector2((OffsetFeet ? -6 : -7) + Character.Sprite.Width / Character.FootHeight, -Character.FootHeight),
+                      self.RenderPosition.Floor() + new Vector2(widthFix - (OffsetFeet ? 0 : 1) + Character.RightFootX, -Character.FootHeight),
                       Vector2.Zero, Color.White,
                       self.Scale
                     );
                 }
             } else {
                 Character.Sprite.Draw(
-                  self.RenderPosition.Floor() + new Vector2(player.Facing == Facings.Left ? 6 : -6, -Character.Sprite.Height),
+                  self.RenderPosition.Floor() + new Vector2(widthFix, -Character.Sprite.Height * (ducking ? 0.3f : 1f)),
                   Vector2.Zero, Color.White,
-                  self.Scale
+                  new Vector2(self.Scale.X, ducking ? 0.3f : self.Scale.Y)
                 );
             }
 
