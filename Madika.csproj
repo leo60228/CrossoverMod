@@ -18,6 +18,14 @@
       <HintPath>../../Celeste.exe</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="FNA">
+      <HintPath>../../FNA.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="YamlDotNet">
+      <HintPath>../../YamlDotNet.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 
 </Project>
