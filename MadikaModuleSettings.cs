@@ -15,6 +15,10 @@ namespace Madika {
                     return MadikaModule.Ralsei;
                 } else if (Mode == MadikaModuleChar.Monika) {
                     return MadikaModule.Monika;
+                } else if (Mode == MadikaModuleChar.Niko) {
+                    return MadikaModule.Niko;
+                } else if (Mode == MadikaModuleChar.WorldMachine) {
+                    return MadikaModule.WorldMachine;
                 }
 
                 return null;
@@ -27,6 +31,8 @@ namespace Madika {
         Kris,
         Ralsei,
         Monika,
+        Niko,
+        WorldMachine,
         Invisible
     }
 }

@@ -17,6 +17,8 @@ namespace Madika {
         public static MadikaCharacter Kris { get; private set; }
         public static MadikaCharacter Ralsei { get; private set; }
         public static MadikaCharacter Monika { get; private set; }
+        public static MadikaCharacter Niko { get; private set; }
+        public static MadikaCharacter WorldMachine { get; private set; }
 
         public static bool OffsetFeet = false;
         public static float OffsetCounter = 0f;
@@ -35,7 +37,9 @@ namespace Madika {
         public override void LoadContent(bool firstLoad) {
             Kris = new MadikaCharacter(GFX.Game["characters/player/kris"], 3, 0);
             Ralsei = new MadikaCharacter(GFX.Game["characters/player/ralsei"], 2, 0);
-            Monika = new MadikaCharacter(GFX.Game["characters/player/monika"], 3, 6);
+            Monika = new MadikaCharacter(GFX.Game["characters/player/monika"], 3, 11);
+            Niko = new MadikaCharacter(GFX.Game["characters/player/niko"], 3, 7);
+            WorldMachine = new MadikaCharacter(GFX.Game["characters/player/worldmachine"], 3, 7);
         }
 
         public override void Unload() {
