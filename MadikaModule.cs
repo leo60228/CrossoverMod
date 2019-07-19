@@ -101,7 +101,7 @@ namespace Madika
 
 			bool ducking = player.Ducking || AirDuck;
 
-			int widthFix = (Character.Sprite.Width / 2 + 2) * (player.Facing == Facings.Left ? 1 : -1);
+			//int widthFix = (Character.Sprite.Width / 2 + 2) * (player.Facing == Facings.Left ? 1 : -1);
 
 			int dashes = player.Dashes;
 
@@ -118,6 +118,11 @@ namespace Madika
 			}
             
 			Vector2 renderPosition = new Vector2(self.RenderPosition.X, self.RenderPosition.Y).Floor();
+         
+			renderPosition.X += (1f - self.Scale.X) * (Character.Sprite.Width/2);
+			renderPosition.Y += (1f - self.Scale.Y) * (Character.Sprite.Height/2);
+
+			renderPosition.X -= Character.Sprite.Width/4 + (player.Facing == Facings.Left ? 0 : Character.Sprite.Width / 4);
 
 			if (Character.Sprite == GFX.Game["characters/player/o"])
             {
@@ -129,7 +134,7 @@ namespace Madika
 				MTexture Body = new MTexture(Character.Sprite, new Rectangle(0, 0, Character.Sprite.Width, Character.Sprite.Height - Character.FootHeight));
 
 				Body.Draw(
-				  renderPosition + new Vector2(widthFix, -Character.Sprite.Height),
+				  renderPosition + new Vector2(0, -Character.Sprite.Height),
 				  Vector2.Zero, Color.White,
 				  self.Scale
 				);
@@ -137,12 +142,12 @@ namespace Madika
 				if (player.Facing == Facings.Left)
 				{
 					Character.LeftFoot.Draw(
-					  renderPosition + new Vector2(widthFix + (OffsetFeet ? 0 : 1), -Character.FootHeight),
+					  renderPosition + new Vector2((OffsetFeet ? 0 : 1), -Character.FootHeight),
 					  Vector2.Zero, Color.White,
 					  self.Scale
 					);
 					Character.RightFoot.Draw(
-					  renderPosition + new Vector2(widthFix + (OffsetFeet ? 1 : 0) - Character.RightFootX, -Character.FootHeight),
+					  renderPosition + new Vector2((OffsetFeet ? 1 : 0) - Character.RightFootX, -Character.FootHeight),
 					  Vector2.Zero, Color.White,
 					  self.Scale
 					);
@@ -150,12 +155,12 @@ namespace Madika
 				else
 				{
 					Character.LeftFoot.Draw(
-					  renderPosition + new Vector2(widthFix - (OffsetFeet ? 1 : 0), -Character.FootHeight),
+					  renderPosition + new Vector2(-(OffsetFeet ? 1 : 0), -Character.FootHeight),
 					  Vector2.Zero, Color.White,
 					  self.Scale
 					);
 					Character.RightFoot.Draw(
-					  renderPosition + new Vector2(widthFix - (OffsetFeet ? 0 : 1) + Character.RightFootX, -Character.FootHeight),
+					  renderPosition + new Vector2(-(OffsetFeet ? 0 : 1) + Character.RightFootX, -Character.FootHeight),
 					  Vector2.Zero, Color.White,
 					  self.Scale
 					);
@@ -164,7 +169,7 @@ namespace Madika
 			else
 			{            
 				Character.Sprite.Draw(
-				  renderPosition + new Vector2(widthFix, -Character.Sprite.Height * (ducking ? 0.3f : 1f)),
+				  renderPosition + new Vector2(0, -Character.Sprite.Height * (ducking ? 0.4f : 1f)),
 				  Vector2.Zero, Color.White,
 				  new Vector2(self.Scale.X, ducking ? 0.3f : self.Scale.Y)
 				);
