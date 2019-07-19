@@ -30,6 +30,10 @@ namespace Madika
 						return MadikaModule.PirahnaPlant;
 					case MadikaModuleChar.O:
 						return MadikaModule.O;
+					case MadikaModuleChar.Kirby:
+						return MadikaModule.Kirby;
+					case MadikaModuleChar.Frosch:
+						return MadikaModule.Frosch;
 				}
 
 				return null;
@@ -47,6 +51,8 @@ namespace Madika
 		WorldMachine,
         PirahnaPlant,
         O,
+        Kirby,
+        Frosch,
 		Invisible
 	}
 }

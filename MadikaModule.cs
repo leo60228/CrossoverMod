@@ -23,6 +23,8 @@ namespace Madika
 		public static MadikaCharacter WorldMachine { get; private set; }
 		public static MadikaCharacter PirahnaPlant { get; private set; }
 		public static MadikaCharacter O { get; private set; }
+		public static MadikaCharacter Kirby { get; private set; }
+		public static MadikaCharacter Frosch { get; private set; }
 
 		public static bool OffsetFeet;
 		public static float OffsetCounter;
@@ -52,6 +54,8 @@ namespace Madika
 			WorldMachine = new MadikaCharacter(GFX.Game["characters/player/worldmachine"], 3, 7);
 			PirahnaPlant = new MadikaCharacter(GFX.Game["characters/player/pirahnaplant_walk_1"], 2, 3);
 			O = new MadikaCharacter(GFX.Game["characters/player/o"], 0, 0);
+			Frosch = new MadikaCharacter(GFX.Game["characters/player/frosch"], 4, 0);
+			Kirby = new MadikaCharacter(GFX.Game["characters/player/kirby"], 3, 8);
 		}
 
 		public override void Unload()
