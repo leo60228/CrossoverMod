@@ -2,3 +2,5 @@ obj/
 Madika.dll
 *.deps.json
 CrossoverMod.zip
+.vs
+bin/
