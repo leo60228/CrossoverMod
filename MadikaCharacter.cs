@@ -12,18 +12,25 @@ namespace Madika
 		public MTexture RightFoot { get; private set; }
 		public int FootHeight { get; private set; }
 		public int RightFootX { get; private set; }
+
+		public bool HasDashTextures { get; private set; }
 		public bool IsPirahnaPlant { get; private set; }
 
-		public MadikaCharacter(MTexture sprite, int footHeight, int footX)
-		{
-			IsPirahnaPlant = sprite == GFX.Game["characters/player/pirahnaplant_walk_1"];
+		public string SpriteName { get; private set; }
 
-			Sprite = sprite;
+		public MadikaCharacter(string spritename, int footHeight, int footX)
+		{
+			HasDashTextures = GFX.Game.Has(spritename + "_0") && GFX.Game.Has(spritename + "_1") && GFX.Game.Has(spritename + "_2");
+                
+			Sprite = GFX.Game[spritename];
+			SpriteName = spritename;
 			FootHeight = footHeight;
 			RightFootX = footX;
 			LeftFoot = new MTexture(Sprite, new Rectangle(0, Sprite.Height - FootHeight, RightFootX - 1, FootHeight));
 			RightFoot = new MTexture(Sprite, new Rectangle(RightFootX, Sprite.Height - FootHeight, Sprite.Width - RightFootX, FootHeight));
 			Body = new MTexture(Sprite, new Rectangle(0, 0, Sprite.Width, Sprite.Height - FootHeight));
+
+			IsPirahnaPlant = Sprite == GFX.Game["characters/player/pirahnaplant_walk"];
 		}
 	}
 }

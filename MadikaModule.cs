@@ -48,15 +48,15 @@ namespace Madika
 
 		public override void LoadContent(bool firstLoad)
 		{
-			Kris = new MadikaCharacter(GFX.Game["characters/player/kris"], 3, 0);
-			Ralsei = new MadikaCharacter(GFX.Game["characters/player/ralsei"], 2, 0);
-			Monika = new MadikaCharacter(GFX.Game["characters/player/monika"], 3, 11);
-			Niko = new MadikaCharacter(GFX.Game["characters/player/niko"], 3, 7);
-			WorldMachine = new MadikaCharacter(GFX.Game["characters/player/worldmachine"], 3, 7);
-			PirahnaPlant = new MadikaCharacter(GFX.Game["characters/player/pirahnaplant_walk_1"], 2, 3);
-			O = new MadikaCharacter(GFX.Game["characters/player/o"], 0, 0);
-			Frosch = new MadikaCharacter(GFX.Game["characters/player/frosch"], 4, 0);
-			Kirby = new MadikaCharacter(GFX.Game["characters/player/kirby"], 2, 8);
+			Kris = new MadikaCharacter("characters/player/kris", 3, 0);
+			Ralsei = new MadikaCharacter("characters/player/ralsei", 2, 0);
+			Monika = new MadikaCharacter("characters/player/monika", 3, 11);
+			Niko = new MadikaCharacter("characters/player/niko", 3, 7);
+			WorldMachine = new MadikaCharacter("characters/player/worldmachine", 3, 7);
+			PirahnaPlant = new MadikaCharacter("characters/player/pirahnaplant_walk", 2, 3);
+			O = new MadikaCharacter("characters/player/o", 0, 0);
+			Frosch = new MadikaCharacter("characters/player/frosch", 4, 0);
+			Kirby = new MadikaCharacter("characters/player/kirby", 2, 8);
 		}
 
 		public override void Unload()
@@ -125,12 +125,16 @@ namespace Madika
 			{
 				if (player.Speed.X == 0)
 				{
-					Character.Sprite = GFX.Game["characters/player/pirahnaplant_still_" + dashes];
+					Character.Sprite = GFX.Game["characters/player/pirahnaplant_still"];
 				}
 				else
 				{
-					Character.Sprite = GFX.Game["characters/player/pirahnaplant_walk_" + dashes];
+					Character.Sprite = GFX.Game["characters/player/pirahnaplant_walk"];
 				}
+			}
+
+			if (Character.HasDashTextures) {
+				Character.Sprite = GFX.Game[Character.SpriteName + "_" + dashes];
 			}
             
 			Vector2 renderPosition = new Vector2(self.RenderPosition.X, self.RenderPosition.Y).Floor();
@@ -144,6 +148,8 @@ namespace Madika
             {
                 renderPosition.Y += (float)Math.Cos(timePassed*1.5);
             }
+
+            
 
 			if (player.Speed.X != 0 && player.OnSafeGround)
 			{
