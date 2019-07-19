@@ -86,8 +86,9 @@ namespace Madika
 		{
 			Player player = self.Entity as Player;
 
-			if (player == null || self.Mode == PlayerSpriteMode.Badeline || Character == null)
+			if (player == null || self.Mode == PlayerSpriteMode.Badeline || Character == null || player.StateMachine.State == 9 || player.StateMachine.State == 5)
 			{
+                // state 9 is dreamdashing, state 5 is red bubble
 				orig(self);
 				return;
 			}         
