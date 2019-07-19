@@ -40,6 +40,7 @@ namespace Madika
 		{
 			On.Celeste.PlayerHair.Render += RenderHair;
 			On.Celeste.PlayerSprite.Render += RenderPlayerSprite;
+			On.Celeste.Player.Update += UpdatePlayer;
 		}
 
 		public override void LoadContent(bool firstLoad)
@@ -57,6 +58,13 @@ namespace Madika
 		{
 			On.Celeste.PlayerHair.Render -= RenderHair;
 			On.Celeste.PlayerSprite.Render -= RenderPlayerSprite;
+			On.Celeste.Player.Update -= UpdatePlayer;
+		}
+
+		public void UpdatePlayer(On.Celeste.Player.orig_Update orig, Player self) 
+		{
+			timePassed += Engine.DeltaTime;
+			orig(self);
 		}
 
 		public void RenderHair(On.Celeste.PlayerHair.orig_Render orig, PlayerHair self)
@@ -69,7 +77,7 @@ namespace Madika
 				return;
 			}
 		}
-
+        
 		public void RenderPlayerSprite(On.Celeste.PlayerSprite.orig_Render orig, PlayerSprite self)
 		{
 			Player player = self.Entity as Player;
@@ -78,9 +86,7 @@ namespace Madika
 			{
 				orig(self);
 				return;
-			}
-
-			timePassed += Engine.DeltaTime;
+			}         
 
 			if (Settings.Mode == MadikaModuleChar.Invisible) return;
 
@@ -92,7 +98,7 @@ namespace Madika
 
 			int widthFix = (Character.Sprite.Width / 2 + 2) * (player.Facing == Facings.Left ? 1 : -1);
 
-			int dashes = self.Scene.Entities.FindFirst<Player>().Dashes;
+			int dashes = player.Dashes;
 
 			if (Character.IsPirahnaPlant)
 			{
