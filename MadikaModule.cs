@@ -55,7 +55,7 @@ namespace Madika
 			PirahnaPlant = new MadikaCharacter(GFX.Game["characters/player/pirahnaplant_walk_1"], 2, 3);
 			O = new MadikaCharacter(GFX.Game["characters/player/o"], 0, 0);
 			Frosch = new MadikaCharacter(GFX.Game["characters/player/frosch"], 4, 0);
-			Kirby = new MadikaCharacter(GFX.Game["characters/player/kirby"], 3, 8);
+			Kirby = new MadikaCharacter(GFX.Game["characters/player/kirby"], 2, 8);
 		}
 
 		public override void Unload()
