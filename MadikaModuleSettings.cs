@@ -13,33 +13,23 @@ namespace Madika
 		{
 			get
 			{
-				if (Mode == MadikaModuleChar.Kris || Mode == MadikaModuleChar.Invisible)
+				switch (Mode)
 				{
-					return MadikaModule.Kris;
-				}
-				else if (Mode == MadikaModuleChar.Ralsei)
-				{
-					return MadikaModule.Ralsei;
-				}
-				else if (Mode == MadikaModuleChar.Monika)
-				{
-					return MadikaModule.Monika;
-				}
-				else if (Mode == MadikaModuleChar.Niko)
-				{
-					return MadikaModule.Niko;
-				}
-				else if (Mode == MadikaModuleChar.WorldMachine)
-				{
-					return MadikaModule.WorldMachine;
-				}
-				else if (Mode == MadikaModuleChar.PirahnaPlant) 
-				{
-					return MadikaModule.PirahnaPlant;
-				}
-				else if (Mode == MadikaModuleChar.O)
-				{
-					return MadikaModule.O;
+					case MadikaModuleChar.Kris:
+					case MadikaModuleChar.Invisible:
+						return MadikaModule.Kris;
+					case MadikaModuleChar.Ralsei:
+						return MadikaModule.Ralsei;
+					case MadikaModuleChar.Monika:
+						return MadikaModule.Monika;
+					case MadikaModuleChar.Niko:
+						return MadikaModule.Niko;
+					case MadikaModuleChar.WorldMachine:
+						return MadikaModule.WorldMachine;
+					case MadikaModuleChar.PirahnaPlant:
+						return MadikaModule.PirahnaPlant;
+					case MadikaModuleChar.O:
+						return MadikaModule.O;
 				}
 
 				return null;

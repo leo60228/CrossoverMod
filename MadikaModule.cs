@@ -84,12 +84,9 @@ namespace Madika
 
 			if (Settings.Mode == MadikaModuleChar.Invisible) return;
 
-			if (player.Ducking && !player.OnSafeGround)
-			{
-				AirDuck = true;
-			}
+			AirDuck |= (player.Ducking && !player.OnSafeGround);
 
-			if (player.OnSafeGround || Input.MoveY != 1) AirDuck = false;
+			AirDuck &= (!player.OnSafeGround && Input.MoveY == 1);
 
 			bool ducking = player.Ducking || AirDuck;
 
