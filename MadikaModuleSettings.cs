@@ -33,6 +33,10 @@ namespace Madika
 				{
 					return MadikaModule.WorldMachine;
 				}
+				else if (Mode == MadikaModuleChar.PirahnaPlant) 
+				{
+					return MadikaModule.PirahnaPlant;
+				}
 
 				return null;
 			}
@@ -47,6 +51,7 @@ namespace Madika
 		Monika,
 		Niko,
 		WorldMachine,
+        PirahnaPlant,
 		Invisible
 	}
 }

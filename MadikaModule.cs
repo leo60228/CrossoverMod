@@ -21,6 +21,7 @@ namespace Madika
 		public static MadikaCharacter Monika { get; private set; }
 		public static MadikaCharacter Niko { get; private set; }
 		public static MadikaCharacter WorldMachine { get; private set; }
+		public static MadikaCharacter PirahnaPlant { get; private set; }
 
 		public static bool OffsetFeet;
 		public static float OffsetCounter;
@@ -45,6 +46,7 @@ namespace Madika
 			Monika = new MadikaCharacter(GFX.Game["characters/player/monika"], 3, 11);
 			Niko = new MadikaCharacter(GFX.Game["characters/player/niko"], 3, 7);
 			WorldMachine = new MadikaCharacter(GFX.Game["characters/player/worldmachine"], 3, 7);
+			PirahnaPlant = new MadikaCharacter(GFX.Game["characters/player/pirahnaplant_walk_1"], 2, 3);
 		}
 
 		public override void Unload()
@@ -84,12 +86,27 @@ namespace Madika
 			if (player.OnSafeGround || Input.MoveY != 1) AirDuck = false;
 
 			bool ducking = player.Ducking || AirDuck;
-
+            
 			int widthFix = (Character.Sprite.Width / 2 + 2) * (player.Facing == Facings.Left ? 1 : -1);
+
+			int dashes = self.Scene.Entities.FindFirst<Player>().Dashes;
+
+			if(Character.IsPirahnaPlant) {
+				if (player.Speed.X == 0)
+                {
+                    Character.Sprite = GFX.Game["characters/player/pirahnaplant_still_" + dashes];
+                }
+                else
+                {
+                    Character.Sprite = GFX.Game["characters/player/pirahnaplant_walk_" + dashes];
+                }
+			}         
 
 			if (player.Speed.X != 0 && player.OnSafeGround)
 			{
-				Character.Body.Draw(
+				MTexture Body = new MTexture(Character.Sprite, new Rectangle(0, 0, Character.Sprite.Width, Character.Sprite.Height - Character.FootHeight));
+                
+				Body.Draw(
 				  self.RenderPosition.Floor() + new Vector2(widthFix, -Character.Sprite.Height),
 				  Vector2.Zero, Color.White,
 				  self.Scale

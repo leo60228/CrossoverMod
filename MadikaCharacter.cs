@@ -1,19 +1,23 @@
 using Monocle;
 using Microsoft.Xna.Framework;
+using Celeste;
 
 namespace Madika
 {
 	public class MadikaCharacter
 	{
-		public MTexture Sprite { get; private set; }
+		public MTexture Sprite { get; set; }
 		public MTexture Body { get; private set; }
 		public MTexture LeftFoot { get; private set; }
 		public MTexture RightFoot { get; private set; }
 		public int FootHeight { get; private set; }
 		public int RightFootX { get; private set; }
+		public bool IsPirahnaPlant { get; private set; }
 
 		public MadikaCharacter(MTexture sprite, int footHeight, int footX)
 		{
+			IsPirahnaPlant = sprite == GFX.Game["characters/player/pirahnaplant_walk_1"];
+
 			Sprite = sprite;
 			FootHeight = footHeight;
 			RightFootX = footX;
