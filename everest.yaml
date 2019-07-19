@@ -1,6 +1,6 @@
-﻿- Name: CrossoverMod
-  Version: 1.0.0
-  DLL: Madika.dll
+﻿- Name: CrossoverMod-Plus
+  Version: 1.2.2
+  DLL: bin/Release/MadikaPlus.dll
   Dependencies:
     - Name: Everest
       Version: 1.0.0
