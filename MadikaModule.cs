@@ -67,7 +67,14 @@ namespace Madika
 
 		public void UpdatePlayer(On.Celeste.Player.orig_Update orig, Player self) 
 		{
-			timePassed += Engine.DeltaTime;
+			timePassed += Engine.DeltaTime;         
+            OffsetCounter += Math.Abs(self.Speed.X) * Engine.DeltaTime;
+
+            if (OffsetCounter > 10)
+            {
+                OffsetCounter = 0;
+                OffsetFeet = !OffsetFeet;
+            }
 			orig(self);
 		}
 
@@ -173,14 +180,7 @@ namespace Madika
 				  Vector2.Zero, Color.White,
 				  new Vector2(self.Scale.X, ducking ? 0.3f : self.Scale.Y)
 				);
-			}
-
-			OffsetCounter += Math.Abs(player.Speed.X) * Engine.DeltaTime;
-			if (OffsetCounter > 10)
-			{
-				OffsetCounter = 0;
-				OffsetFeet = !OffsetFeet;
-			}
+			}         
 		}
 	}
 }
