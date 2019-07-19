@@ -22,11 +22,14 @@ namespace Madika
 		public static MadikaCharacter Niko { get; private set; }
 		public static MadikaCharacter WorldMachine { get; private set; }
 		public static MadikaCharacter PirahnaPlant { get; private set; }
+		public static MadikaCharacter O { get; private set; }
 
 		public static bool OffsetFeet;
 		public static float OffsetCounter;
 
 		public static bool AirDuck;
+
+		public float timePassed;
 
 		public MadikaModule()
 		{
@@ -47,6 +50,7 @@ namespace Madika
 			Niko = new MadikaCharacter(GFX.Game["characters/player/niko"], 3, 7);
 			WorldMachine = new MadikaCharacter(GFX.Game["characters/player/worldmachine"], 3, 7);
 			PirahnaPlant = new MadikaCharacter(GFX.Game["characters/player/pirahnaplant_walk_1"], 2, 3);
+			O = new MadikaCharacter(GFX.Game["characters/player/o"], 0, 0);
 		}
 
 		public override void Unload()
@@ -55,7 +59,7 @@ namespace Madika
 			On.Celeste.PlayerSprite.Render -= RenderPlayerSprite;
 		}
 
-		public static void RenderHair(On.Celeste.PlayerHair.orig_Render orig, PlayerHair self)
+		public void RenderHair(On.Celeste.PlayerHair.orig_Render orig, PlayerHair self)
 		{
 			Player player = self.Entity as Player;
 
@@ -66,7 +70,7 @@ namespace Madika
 			}
 		}
 
-		public static void RenderPlayerSprite(On.Celeste.PlayerSprite.orig_Render orig, PlayerSprite self)
+		public void RenderPlayerSprite(On.Celeste.PlayerSprite.orig_Render orig, PlayerSprite self)
 		{
 			Player player = self.Entity as Player;
 
@@ -75,6 +79,8 @@ namespace Madika
 				orig(self);
 				return;
 			}
+
+			timePassed += Engine.DeltaTime;
 
 			if (Settings.Mode == MadikaModuleChar.Invisible) return;
 
@@ -86,28 +92,36 @@ namespace Madika
 			if (player.OnSafeGround || Input.MoveY != 1) AirDuck = false;
 
 			bool ducking = player.Ducking || AirDuck;
-            
+
 			int widthFix = (Character.Sprite.Width / 2 + 2) * (player.Facing == Facings.Left ? 1 : -1);
 
 			int dashes = self.Scene.Entities.FindFirst<Player>().Dashes;
 
-			if(Character.IsPirahnaPlant) {
+			if (Character.IsPirahnaPlant)
+			{
 				if (player.Speed.X == 0)
-                {
-                    Character.Sprite = GFX.Game["characters/player/pirahnaplant_still_" + dashes];
-                }
-                else
-                {
-                    Character.Sprite = GFX.Game["characters/player/pirahnaplant_walk_" + dashes];
-                }
-			}         
+				{
+					Character.Sprite = GFX.Game["characters/player/pirahnaplant_still_" + dashes];
+				}
+				else
+				{
+					Character.Sprite = GFX.Game["characters/player/pirahnaplant_walk_" + dashes];
+				}
+			}
+            
+			Vector2 renderPosition = new Vector2(self.RenderPosition.X, self.RenderPosition.Y).Floor();
+
+			if (Character.Sprite == GFX.Game["characters/player/o"])
+            {
+                renderPosition.Y += (float)Math.Cos(timePassed*1.5);
+            }
 
 			if (player.Speed.X != 0 && player.OnSafeGround)
 			{
 				MTexture Body = new MTexture(Character.Sprite, new Rectangle(0, 0, Character.Sprite.Width, Character.Sprite.Height - Character.FootHeight));
-                
+
 				Body.Draw(
-				  self.RenderPosition.Floor() + new Vector2(widthFix, -Character.Sprite.Height),
+				  renderPosition + new Vector2(widthFix, -Character.Sprite.Height),
 				  Vector2.Zero, Color.White,
 				  self.Scale
 				);
@@ -115,12 +129,12 @@ namespace Madika
 				if (player.Facing == Facings.Left)
 				{
 					Character.LeftFoot.Draw(
-					  self.RenderPosition.Floor() + new Vector2(widthFix + (OffsetFeet ? 0 : 1), -Character.FootHeight),
+					  renderPosition + new Vector2(widthFix + (OffsetFeet ? 0 : 1), -Character.FootHeight),
 					  Vector2.Zero, Color.White,
 					  self.Scale
 					);
 					Character.RightFoot.Draw(
-					  self.RenderPosition.Floor() + new Vector2(widthFix + (OffsetFeet ? 1 : 0) - Character.RightFootX, -Character.FootHeight),
+					  renderPosition + new Vector2(widthFix + (OffsetFeet ? 1 : 0) - Character.RightFootX, -Character.FootHeight),
 					  Vector2.Zero, Color.White,
 					  self.Scale
 					);
@@ -128,21 +142,21 @@ namespace Madika
 				else
 				{
 					Character.LeftFoot.Draw(
-					  self.RenderPosition.Floor() + new Vector2(widthFix - (OffsetFeet ? 1 : 0), -Character.FootHeight),
+					  renderPosition + new Vector2(widthFix - (OffsetFeet ? 1 : 0), -Character.FootHeight),
 					  Vector2.Zero, Color.White,
 					  self.Scale
 					);
 					Character.RightFoot.Draw(
-					  self.RenderPosition.Floor() + new Vector2(widthFix - (OffsetFeet ? 0 : 1) + Character.RightFootX, -Character.FootHeight),
+					  renderPosition + new Vector2(widthFix - (OffsetFeet ? 0 : 1) + Character.RightFootX, -Character.FootHeight),
 					  Vector2.Zero, Color.White,
 					  self.Scale
 					);
 				}
 			}
 			else
-			{
+			{            
 				Character.Sprite.Draw(
-				  self.RenderPosition.Floor() + new Vector2(widthFix, -Character.Sprite.Height * (ducking ? 0.3f : 1f)),
+				  renderPosition + new Vector2(widthFix, -Character.Sprite.Height * (ducking ? 0.3f : 1f)),
 				  Vector2.Zero, Color.White,
 				  new Vector2(self.Scale.X, ducking ? 0.3f : self.Scale.Y)
 				);
