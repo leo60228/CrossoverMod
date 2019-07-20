@@ -121,16 +121,9 @@ namespace Madika
 
 			int dashes = player.Dashes;
 
-			if (Character.IsPirahnaPlant)
+			if (Character.HasWalkStillTextures)
 			{
-				if (player.Speed.X == 0)
-				{
-					Character.Sprite = GFX.Game["characters/player/pirahnaplant_still"];
-				}
-				else
-				{
-					Character.Sprite = GFX.Game["characters/player/pirahnaplant_walk"];
-				}
+				Character.Sprite = GFX.Game[Character.SpriteName + "_" + (player.Speed.X == 0 ? "walk" : "still")];
 			}
 
 			if (Character.HasDashTextures) {
