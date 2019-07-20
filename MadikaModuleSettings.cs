@@ -22,6 +22,8 @@ namespace Madika
 						return MadikaModule.Ralsei;
 					case MadikaModuleChar.Monika:
 						return MadikaModule.Monika;
+					case MadikaModuleChar.MonikaHair:
+						return MadikaModule.MonikaHair;
 					case MadikaModuleChar.Niko:
 						return MadikaModule.Niko;
 					case MadikaModuleChar.WorldMachine:
@@ -47,6 +49,7 @@ namespace Madika
 		Kris,
 		Ralsei,
 		Monika,
+        MonikaHair,
 		Niko,
 		WorldMachine,
         PirahnaPlant,

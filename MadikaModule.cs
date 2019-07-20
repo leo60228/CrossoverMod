@@ -20,6 +20,7 @@ namespace Madika
 		public static MadikaCharacter Kris { get; private set; }
 		public static MadikaCharacter Ralsei { get; private set; }
 		public static MadikaCharacter Monika { get; private set; }
+		public static MadikaCharacter MonikaHair { get; private set; }
 		public static MadikaCharacter Niko { get; private set; }
 		public static MadikaCharacter WorldMachine { get; private set; }
 		public static MadikaCharacter PirahnaPlant { get; private set; }
@@ -35,13 +36,11 @@ namespace Madika
 
 		public float timePassed;
 
-		private List<Vector2> originalNodes;
-
 		public MadikaModule()
 		{
 			Instance = this;
 		}
-
+        
 		public override void Load()
 		{
 			On.Celeste.PlayerHair.Render += RenderHair;
@@ -54,6 +53,7 @@ namespace Madika
 			Kris = new MadikaCharacter("characters/player/kris", 3, 0);
 			Ralsei = new MadikaCharacter("characters/player/ralsei", 2, 0);
 			Monika = new MadikaCharacter("characters/player/monika", 3, 11);
+			MonikaHair = new MadikaCharacter("characters/player/baldemonika", 3, 11, true, new Vector2(-1, -3));
 			Niko = new MadikaCharacter("characters/player/niko", 3, 7);
 			WorldMachine = new MadikaCharacter("characters/player/worldmachine", 3, 7);
 			PirahnaPlant = new MadikaCharacter("characters/player/pirahnaplant_walk", 2, 3);
@@ -93,30 +93,58 @@ namespace Madika
 			Player player = self.Entity as Player;         
 
 			if (player == null || self.GetSprite().Mode == PlayerSpriteMode.Badeline || Character == null)
-			{
-				if (originalNodes.Count != 0)
-                {
-					self.Nodes = originalNodes;
-                }
-
+			{            
 				orig(self);
 				return;
 			}
-			if (Character.HasHair) {
-				if (originalNodes.Count == 0) {
-					originalNodes = self.Nodes;
-				}
+			if (Character.HasHair) 
+			{
+				if (self.Sprite.HasHair)
+                {               
+                    Vector2 origin = new Vector2(5f, 5f);
+                    Color color = self.Border * self.Alpha;
 
-				int i = 0;
+					Vector2 offset = new Vector2(Character.HairOffset.X * (self.GetHairScale(0).X > 0 ? 1 : -1), Character.HairOffset.Y);
 
-				self.Nodes.ForEach((Vector2 node) =>
-				{
-					self.Nodes[i] += Character.HairOffset;
+                    if (self.DrawPlayerSpriteOutline)
+                    {
+						Color color2 = self.Sprite.Color;
+						Vector2 position = self.Sprite.Position;
+						self.Sprite.Color = color;
 
-					i++;
-				});
-
-				orig(self);
+						self.Sprite.Position = position + new Vector2(0f, -1f) + offset;
+						self.Sprite.Render();
+						self.Sprite.Position = position + new Vector2(0f, 1f) + offset;
+						self.Sprite.Render();
+						self.Sprite.Position = position + new Vector2(-1f, 0f) + offset;
+						self.Sprite.Render();
+						self.Sprite.Position = position + new Vector2(1f, 0f) + offset;
+						self.Sprite.Render();
+						self.Sprite.Color = color2;
+						self.Sprite.Position = position;
+                    }
+					self.Nodes[0] = self.Nodes[0].Floor();
+                    if (color.A > 0)
+                    {
+						for (int i = 0; i < self.Sprite.HairCount; i++)
+                        {
+							MTexture hairTexture = self.GetHairTexture(i);
+							Vector2 hairScale = self.GetHairScale(i);
+							hairTexture.Draw(self.Nodes[i] + new Vector2(-1f, 0f) + offset, origin, color, hairScale);
+							hairTexture.Draw(self.Nodes[i] + new Vector2(1f, 0f) + offset, origin, color, hairScale);
+							hairTexture.Draw(self.Nodes[i] + new Vector2(0f, -1f) + offset, origin, color, hairScale);
+							hairTexture.Draw(self.Nodes[i] + new Vector2(0f, 1f) + offset, origin, color, hairScale);
+                        }
+                    }
+					for (int num = self.Sprite.HairCount - 1; num >= 0; num--)
+                    {
+						self.GetHairTexture(num).Draw(self.Nodes[num] + offset, origin, self.GetHairColor(num), self.GetHairScale(num));                  
+                    }
+					if (Character.SpriteName.Contains("baldemonika"))
+                    {
+						GFX.Game["characters/player/baldemonikaribbon"].Draw(self.Nodes[0] + offset - new Vector2(self.GetHairScale(0).X > 0 ? 1 : -1, 2), origin, Color.White, self.GetHairScale(0));
+                    }
+                }
 			}
 		}
         
