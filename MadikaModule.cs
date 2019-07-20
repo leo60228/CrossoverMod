@@ -3,6 +3,7 @@ using System;
 using Celeste;
 using Monocle;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace Madika
 {
@@ -34,6 +35,8 @@ namespace Madika
 
 		public float timePassed;
 
+		private List<Vector2> originalNodes;
+
 		public MadikaModule()
 		{
 			Instance = this;
@@ -50,7 +53,7 @@ namespace Madika
 		{
 			Kris = new MadikaCharacter("characters/player/kris", 3, 0);
 			Ralsei = new MadikaCharacter("characters/player/ralsei", 2, 0);
-			Monika = new MadikaCharacter("characters/player/monika", 3, 11);
+			Monika = new MadikaCharacter("characters/player/monika", 3, 11, true, new Vector2(0, -10));
 			Niko = new MadikaCharacter("characters/player/niko", 3, 7);
 			WorldMachine = new MadikaCharacter("characters/player/worldmachine", 3, 7);
 			PirahnaPlant = new MadikaCharacter("characters/player/pirahnaplant_walk", 2, 3);
@@ -87,12 +90,33 @@ namespace Madika
 
 		public void RenderHair(On.Celeste.PlayerHair.orig_Render orig, PlayerHair self)
 		{
-			Player player = self.Entity as Player;
+			Player player = self.Entity as Player;         
 
 			if (player == null || self.GetSprite().Mode == PlayerSpriteMode.Badeline || Character == null)
 			{
+				if (originalNodes.Count != 0)
+                {
+					self.Nodes = originalNodes;
+                }
+
 				orig(self);
 				return;
+			}
+			if (Character.HasHair) {
+				if (originalNodes.Count == 0) {
+					originalNodes = self.Nodes;
+				}
+
+				int i = 0;
+
+				self.Nodes.ForEach((Vector2 node) =>
+				{
+					self.Nodes[i] += Character.HairOffset;
+
+					i++;
+				});
+
+				orig(self);
 			}
 		}
         

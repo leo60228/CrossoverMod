@@ -18,11 +18,21 @@ namespace Madika
 
 		public string SpriteName { get; private set; }
 
-		public MadikaCharacter(string spritename, int footHeight, int footX)
+		public bool HasHair { get; private set; }
+		public Vector2 HairOffset { get; private set; }
+
+		public MadikaCharacter(string spritename, int footHeight, int footX) : this(spritename, footHeight, footX, false, new Vector2(0, 0))
+		{         
+		}
+
+		public MadikaCharacter(string spritename, int footHeight, int footX, bool hasHair, Vector2 hairOffset)
 		{
 			HasDashTextures = GFX.Game.Has(spritename + "_0") && GFX.Game.Has(spritename + "_1") && GFX.Game.Has(spritename + "_2");
 			HasWalkStillTextures = GFX.Game.Has(spritename + "_walk") && GFX.Game.Has(spritename + "_still");
-            
+
+			HasHair = hasHair;
+			HairOffset = hairOffset;
+
 			Sprite = GFX.Game[spritename];
 			SpriteName = spritename;
 			FootHeight = footHeight;
