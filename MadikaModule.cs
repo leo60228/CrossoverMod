@@ -53,7 +53,7 @@ namespace Madika
 		{
 			Kris = new MadikaCharacter("characters/player/kris", 3, 0);
 			Ralsei = new MadikaCharacter("characters/player/ralsei", 2, 0);
-			Monika = new MadikaCharacter("characters/player/monika", 3, 11, true, new Vector2(0, -10));
+			Monika = new MadikaCharacter("characters/player/monika", 3, 11);
 			Niko = new MadikaCharacter("characters/player/niko", 3, 7);
 			WorldMachine = new MadikaCharacter("characters/player/worldmachine", 3, 7);
 			PirahnaPlant = new MadikaCharacter("characters/player/pirahnaplant_walk", 2, 3);
