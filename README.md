@@ -1,8 +1,7 @@
-# Madika-Plus
+# CrossoverMod
+Celeste mod to add additional player characters.
 
-a fork of madika that removes .net dependency and adds more characters and features
-
-# Screenshots
+## Screenshots
 
 ![img1](./docs/img1.png "O in 2A")
 
