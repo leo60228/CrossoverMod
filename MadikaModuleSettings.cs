@@ -38,6 +38,8 @@ namespace Madika
 						return MadikaModule.Frosch;
 					case MadikaModuleChar.Hyper:
 						return MadikaModule.Hyper;
+					case MadikaModuleChar.Boshy:
+						return MadikaModule.Boshy;
 				}
 
 				return null;
@@ -59,6 +61,7 @@ namespace Madika
         Kirby,
         Frosch,
         Hyper,
+        Boshy,
 		Invisible
 	}
 }

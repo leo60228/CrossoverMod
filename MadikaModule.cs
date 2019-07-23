@@ -28,6 +28,7 @@ namespace Madika
 		public static MadikaCharacter Kirby { get; private set; }
 		public static MadikaCharacter Frosch { get; private set; }
 		public static MadikaCharacter Hyper { get; private set; }
+		public static MadikaCharacter Boshy { get; private set; }
 
 		public static bool OffsetFeet;
 		public static float OffsetCounter;
@@ -62,6 +63,7 @@ namespace Madika
 			Frosch = new MadikaCharacter("characters/player/frosch", 4, 0);
 			Kirby = new MadikaCharacter("characters/player/kirby", 2, 8);
 			Hyper = new MadikaCharacter("characters/player/hyper", 0, 0);
+			Boshy = new MadikaCharacter("characters/player/boshy", 2, 7);
 		}
 
 		public override void Unload()
