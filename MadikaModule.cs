@@ -73,6 +73,15 @@ namespace Madika
 			On.Celeste.Player.Update -= UpdatePlayer;
 		}
 
+        private MTexture GFXGameSafe(string name)
+		{
+			if(GFX.Game.Has(name)) {
+				return GFX.Game[name];
+			} else {
+				return null;
+			}
+		}
+
 		public void UpdatePlayer(On.Celeste.Player.orig_Update orig, Player self) 
 		{
 			timePassed += Engine.DeltaTime;         
@@ -179,11 +188,11 @@ namespace Madika
 
 			if (Character.HasWalkStillTextures)
 			{
-				Character.Sprite = GFX.Game[Character.SpriteName + "_" + (player.Speed.X == 0 ? "walk" : "still")];
+				Character.Sprite = GFXGameSafe(Character.SpriteName + "_" + (player.Speed.X == 0 ? "walk" : "still"));
 			}
 
 			if (Character.HasDashTextures) {
-				Character.Sprite = GFX.Game[Character.SpriteName + "_" + dashes];
+				Character.Sprite = GFXGameSafe(Character.SpriteName + "_" + dashes);
 			}
             
 			Vector2 renderPosition = new Vector2(self.RenderPosition.X, self.RenderPosition.Y).Floor();
@@ -198,7 +207,7 @@ namespace Madika
                 renderPosition.Y += (float)Math.Cos(timePassed*1.5);
             }
 
-            
+			if (Character.Sprite == null) return;
 
 			if (player.Speed.X != 0 && player.OnSafeGround)
 			{
