@@ -1,6 +1,6 @@
 obj/
-Madika.dll
+/Madika.dll
 *.deps.json
 CrossoverMod.zip
 .vs
-bin/
+bin/*/

@@ -34,23 +34,23 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Celeste">
-      <HintPath>..\..\.local\share\Steam\steamapps\common\Celeste\Celeste.exe</HintPath>
+      <HintPath>..\..\Celeste.exe</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="FNA">
-      <HintPath>..\..\.local\share\Steam\steamapps\common\Celeste\FNA.dll</HintPath>
+      <HintPath>..\..\FNA.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MMHOOK_Celeste">
-      <HintPath>..\..\.local\share\Steam\steamapps\common\Celeste\MMHOOK_Celeste.dll</HintPath>
+      <HintPath>..\..\MMHOOK_Celeste.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.Xml">
-      <HintPath>..\..\.local\share\Steam\steamapps\common\Celeste\System.Xml.dll</HintPath>
+      <HintPath>..\..\System.Xml.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="YamlDotNet">
-      <HintPath>..\..\.local\share\Steam\steamapps\common\Celeste\YamlDotNet.dll</HintPath>
+      <HintPath>..\..\YamlDotNet.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
