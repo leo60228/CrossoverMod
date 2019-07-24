@@ -1,2 +1,3 @@
 #!/bin/sh
-zip -r CrossoverMod.zip bin/ everest.yaml Graphics/
+rm -fv CrossoverMod.zip || true
+zip -r CrossoverMod.zip Madika.dll everest.yaml Graphics/
