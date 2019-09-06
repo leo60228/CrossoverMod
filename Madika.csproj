@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <Reference Include="On.Celeste">
-      <HintPath>./MMHOOK_Celeste.dll</HintPath>
+      <HintPath>../../MMHOOK_Celeste.dll</HintPath>
       <Private>false</Private>
     </Reference>
     <Reference Include="Celeste">
